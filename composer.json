@@ -1,0 +1,38 @@
+{
+  "name": "job-runner/symfony-console-adapter",
+  "homepage": "https://github.com/job-runner/symfony-console-adapter",
+  "license": "MIT",
+  "description": "",
+  "authors": [
+    {
+      "name": "Stéphane Demonchaux",
+      "email": "demonchaux.stephane@gmail.com",
+      "homepage": "https://github.com/fezfez"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "job-runner/job-runner": "^0.1",
+    "symfony/console": "^5.0"
+  },
+  "require-dev": {
+    "doctrine/coding-standard": "^9.0",
+    "infection/infection": "^0.25.3",
+    "phpunit/phpunit": "^9.5.10",
+    "psalm/plugin-phpunit": "^0.16.1",
+    "vimeo/psalm": "^4.13.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "JobRunner\\JobRunner\\SymfonyConsole\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "JobRunner\\JobRunner\\SymfonyConsole\\Tests\\": "tests"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
