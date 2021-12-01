@@ -5,3 +5,5 @@ logs
 .phpunit.result.cache
 test.php
 coverage
+composer.lock
+
