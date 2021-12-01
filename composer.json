@@ -12,8 +12,8 @@
   ],
   "require": {
     "php": "^8.0",
-    "job-runner/job-runner": "^0.1",
-    "symfony/console": "^5.0"
+    "job-runner/job-runner": "^0.2",
+    "symfony/console": "^5.0 || ^6.0"
   },
   "require-dev": {
     "doctrine/coding-standard": "^9.0",
