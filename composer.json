@@ -19,7 +19,7 @@
     "doctrine/coding-standard": "^9.0",
     "infection/infection": "^0.25.3",
     "phpunit/phpunit": "^9.5.10",
-    "psalm/plugin-phpunit": "^0.16.1",
+    "psalm/plugin-phpunit": "^0.17.0",
     "vimeo/psalm": "^4.13.1"
   },
   "autoload": {
