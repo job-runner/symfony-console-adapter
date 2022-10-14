@@ -16,7 +16,7 @@
     "symfony/console": "^5.0 || ^6.0"
   },
   "require-dev": {
-    "doctrine/coding-standard": "^9.0",
+    "doctrine/coding-standard": "^10.0",
     "infection/infection": "^0.25.3",
     "phpunit/phpunit": "^9.5.10",
     "psalm/plugin-phpunit": "^0.16.1",
