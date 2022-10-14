@@ -11,16 +11,16 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "job-runner/job-runner": "^0.2",
     "symfony/console": "^5.0 || ^6.0"
   },
   "require-dev": {
-    "doctrine/coding-standard": "^9.0",
-    "infection/infection": "^0.25.3",
-    "phpunit/phpunit": "^9.5.10",
-    "psalm/plugin-phpunit": "^0.16.1",
-    "vimeo/psalm": "^4.13.1"
+    "doctrine/coding-standard": "^10.0",
+    "infection/infection": "^0.26.15",
+    "phpunit/phpunit": "^9.5.25",
+    "psalm/plugin-phpunit": "^0.17.0",
+    "vimeo/psalm": "^4.29.0"
   },
   "autoload": {
     "psr-4": {
@@ -33,6 +33,10 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "infection/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

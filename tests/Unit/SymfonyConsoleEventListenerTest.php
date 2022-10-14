@@ -10,9 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 
-/**
- * @covers \JobRunner\JobRunner\SymfonyConsole\SymfonyConsoleEventListener
- */
+/** @covers \JobRunner\JobRunner\SymfonyConsole\SymfonyConsoleEventListener */
 class SymfonyConsoleEventListenerTest extends TestCase
 {
     public function testSuccess(): void

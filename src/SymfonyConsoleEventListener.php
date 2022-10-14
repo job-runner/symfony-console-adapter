@@ -18,15 +18,13 @@ use function array_values;
 
 final class SymfonyConsoleEventListener implements JobEvent, JobSuccessEvent, JobFailEvent, JobStartEvent, JobNotDueEvent, JobIsLockedEvent
 {
-    private ConsoleSectionOutput $tableSection;
-    private Table $table;
     /** @var array<string, array<array-key, string|null>> */
     private array $rows = [];
 
-    public function __construct(ConsoleSectionOutput $consoleSectionOutput, Table $table)
-    {
-        $this->tableSection = $consoleSectionOutput;
-        $this->table        = $table;
+    public function __construct(
+        private readonly ConsoleSectionOutput $tableSection,
+        private readonly Table $table,
+    ) {
         $this->table->setHeaders(['Job name', 'state', 'output']);
     }
 
@@ -55,7 +53,7 @@ final class SymfonyConsoleEventListener implements JobEvent, JobSuccessEvent, Jo
         $this->doIt($job, 'isLocked');
     }
 
-    private function doIt(Job $job, string $state, ?string $output = null): void
+    private function doIt(Job $job, string $state, string|null $output = null): void
     {
         $this->rows[$job->getName()] = [$job->getName(), $state, $output];
         $this->tableSection->clear();
