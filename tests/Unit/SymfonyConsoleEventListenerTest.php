@@ -10,9 +10,25 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 
+use function array_key_exists;
+
 /** @covers \JobRunner\JobRunner\SymfonyConsole\SymfonyConsoleEventListener */
 class SymfonyConsoleEventListenerTest extends TestCase
 {
+    /** @var array<string, int> */
+    private array $matcher = [];
+
+    private function getNextIncrement(string $name): int
+    {
+        if (! array_key_exists($name, $this->matcher)) {
+            $this->matcher[$name] = 0;
+        }
+
+        $this->matcher[$name]++;
+
+        return $this->matcher[$name];
+    }
+
     public function testSuccess(): void
     {
         $table                = self::createMock(Table::class);
@@ -23,13 +39,15 @@ class SymfonyConsoleEventListenerTest extends TestCase
         $job->expects($this->any())->method('getName')->willReturn('myName');
         $consoleSectionOutput->expects($this->exactly(5))->method('clear');
         $table->expects($this->once())->method('setHeaders')->with(['Job name', 'state', 'output']);
-        $table->expects($this->exactly(5))->method('setRows')->withConsecutive(
-            [[['myName', 'start', null]]],
-            [[['myName', 'fail', 'toto']]],
-            [[['myName', 'notDue', null]]],
-            [[['myName', 'isLocked', null]]],
-            [[['myName', 'success', 'toto']]],
-        );
+        $table->expects($this->exactly(5))->method('setRows')->with($this->callback(function (mixed $param) {
+            return $param === match ($this->getNextIncrement('setRows')) {
+                1 => [['myName', 'start', null]],
+                2 => [['myName', 'fail', 'toto']],
+                3 => [['myName', 'notDue', null]],
+                4 => [['myName', 'isLocked', null]],
+                5 => [['myName', 'success', 'toto']],
+            };
+        }));
 
         $sUT = new SymfonyConsoleEventListener($consoleSectionOutput, $table);
 
