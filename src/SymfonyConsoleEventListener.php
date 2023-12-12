@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JobRunner\JobRunner\SymfonyConsole;
 
+use Cron\CronExpression;
 use JobRunner\JobRunner\Event\JobEvent;
 use JobRunner\JobRunner\Event\JobFailEvent;
 use JobRunner\JobRunner\Event\JobIsLockedEvent;
@@ -25,7 +26,7 @@ final class SymfonyConsoleEventListener implements JobEvent, JobSuccessEvent, Jo
         private readonly ConsoleSectionOutput $tableSection,
         private readonly Table $table,
     ) {
-        $this->table->setHeaders(['Job name', 'state', 'output']);
+        $this->table->setHeaders(['Job name', 'cron expression', 'next run date', 'state', 'output']);
     }
 
     public function start(Job $job): void
@@ -55,7 +56,13 @@ final class SymfonyConsoleEventListener implements JobEvent, JobSuccessEvent, Jo
 
     private function doIt(Job $job, string $state, string|null $output = null): void
     {
-        $this->rows[$job->getName()] = [$job->getName(), $state, $output];
+        $this->rows[$job->getName()] = [
+            $job->getName(),
+            $job->getCronExpression(),
+            (new CronExpression($job->getCronExpression()))->getNextRunDate()->format('Y-m-d H:i:s'),
+            $state,
+            $output,
+        ];
         $this->tableSection->clear();
         $this->table->setRows(array_values($this->rows));
         $this->table->render();

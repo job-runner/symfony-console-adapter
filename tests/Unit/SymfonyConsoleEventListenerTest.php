@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JobRunner\JobRunner\SymfonyConsole\Tests\Unit;
 
+use DateTimeImmutable;
 use JobRunner\JobRunner\Job\Job;
 use JobRunner\JobRunner\SymfonyConsole\SymfonyConsoleEventListener;
 use PHPUnit\Framework\TestCase;
@@ -34,18 +35,20 @@ class SymfonyConsoleEventListenerTest extends TestCase
         $table                = self::createMock(Table::class);
         $consoleSectionOutput = self::createMock(ConsoleSectionOutput::class);
         $job                  = self::createMock(Job::class);
+        $nextHour             = (new DateTimeImmutable())->setTime((int) (new DateTimeImmutable())->modify('+1 hour')->format('H'), 0, 0);
 
         $table->expects($this->exactly(5))->method('render');
         $job->expects($this->any())->method('getName')->willReturn('myName');
+        $job->expects($this->any())->method('getCronExpression')->willReturn('0 * * * *');
         $consoleSectionOutput->expects($this->exactly(5))->method('clear');
-        $table->expects($this->once())->method('setHeaders')->with(['Job name', 'state', 'output']);
-        $table->expects($this->exactly(5))->method('setRows')->with($this->callback(function (mixed $param) {
+        $table->expects($this->once())->method('setHeaders')->with(['Job name', 'cron expression', 'next run date', 'state', 'output']);
+        $table->expects($this->exactly(5))->method('setRows')->with($this->callback(function (mixed $param) use ($nextHour) {
             return $param === match ($this->getNextIncrement('setRows')) {
-                1 => [['myName', 'start', null]],
-                2 => [['myName', 'fail', 'toto']],
-                3 => [['myName', 'notDue', null]],
-                4 => [['myName', 'isLocked', null]],
-                5 => [['myName', 'success', 'toto']],
+                1 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'start', null]],
+                2 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'fail', 'toto']],
+                3 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'notDue', null]],
+                4 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'isLocked', null]],
+                5 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'success', 'toto']],
             };
         }));
 
