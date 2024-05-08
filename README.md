@@ -1,4 +1,4 @@
-# symfony/console for JobRunner #
+# symfony/console for JobRunner
 
 [![Build Status](https://github.com/job-runner/symfony-console-adapter/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/job-runner/symfony-console-adapter/actions/workflows/continuous-integration.yml)
 [![Type Coverage](https://shepherd.dev/github/job-runner/symfony-console-adapter/coverage.svg)](https://shepherd.dev/github/job-runner/symfony-console-adapter)
