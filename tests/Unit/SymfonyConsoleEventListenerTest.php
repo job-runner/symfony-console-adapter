@@ -7,13 +7,14 @@ namespace JobRunner\JobRunner\SymfonyConsole\Tests\Unit;
 use DateTimeImmutable;
 use JobRunner\JobRunner\Job\Job;
 use JobRunner\JobRunner\SymfonyConsole\SymfonyConsoleEventListener;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 
 use function array_key_exists;
 
-/** @covers \JobRunner\JobRunner\SymfonyConsole\SymfonyConsoleEventListener */
+#[CoversClass(SymfonyConsoleEventListener::class)]
 class SymfonyConsoleEventListenerTest extends TestCase
 {
     /** @var array<string, int> */
