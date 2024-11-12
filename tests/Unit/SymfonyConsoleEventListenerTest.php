@@ -9,6 +9,7 @@ use JobRunner\JobRunner\Job\Job;
 use JobRunner\JobRunner\SymfonyConsole\SymfonyConsoleEventListener;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 
@@ -50,6 +51,7 @@ class SymfonyConsoleEventListenerTest extends TestCase
                 3 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'notDue', null]],
                 4 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'isLocked', null]],
                 5 => [['myName', '0 * * * *', $nextHour->format('Y-m-d H:i:s'), 'success', 'toto']],
+                default => throw new RuntimeException()
             };
         }));
 
